@@ -1,25 +1,17 @@
-# Arduino Würfel
-Eine einfache Würfelanimation, die per Knopfdruck ein Würfelergebnis von eins bis sechs mit Hilfe von 7LEDs ausgibt.
+# Arduino Würfel - Hardwaretest
+Ein Hardwaretest zum Testen der Hardware des Arduino Würfels.
+
+Hardware:
+
+			7 LEDs mit Vorwiederstand
+			1 Taster
 
 
+Beim starten des Programms, wird jede der 7 LEDs wird beim einzelnd einmal ein und wieder ausgeschaltet.
+Danach kann man den Knopf drücken um zu kontrollieren, dass auch dieser funktioniert. Nach dem Drücken des Knopfes sollten alle 7 LEDs gleichzeitig einmal ein und wieder ausgeschaltet werden.
 
-Beim starten des Würfels, wird eine kleine Animation abgespielt.
-Danch ist der Würfel einsatz bereit, es leuchtet keine der 7 LEDs.
-Sobald der User auf den Knopf drückt, wird eine Zufallszahl ermittelt und diese nach einer kleinen Würfelanimation als Würfelbild angezeigt:
-
-(Im Folfgenden sind die Zahlen 1 - 6 absteigend dargestellt)
-
-	*   *			*   *			*   *
-	*   *		  	  *
-	*   *			*   *			*   *
-
-	    *			    *
-	  *  			     			  *
-	*   			*
-
-nach 4 Sekunden, schalten sich alle LEDs wieder aus.
-	
-Die Animationslänge wird zufällig ausgewählt (min 4sec, max 10sec). Sie zeigt in schneller Abfolge zahlen zwischen 1 und 6 an.
+Nach 400 Millisekunden, schalten sich alle LEDs wieder aus.
+Nun kann der Knopf erneut gedrückt werden.
 
 
 	
