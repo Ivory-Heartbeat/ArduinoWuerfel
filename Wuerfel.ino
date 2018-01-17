@@ -6,7 +6,7 @@ Beim Wuerfeln wird ebenfalls eine Animation abgespielt.
 */
 
 /*Verwendete Bibliothek*/
-#include <Wuerfeln.h>
+#include <WuerfelnLED.h>
 
 
 /*
@@ -22,7 +22,7 @@ long randCount;
 
 
 /*Objekt erzeugen*/
-Wuerfeln wuerfeln(2,6,7,8,9,10,11,12);
+WuerfelnLED wuerfelnLED(2,6,7,8,9,10,11);
 
 /*
  * Initial setup
@@ -41,12 +41,12 @@ void setup() {
 */
 void loop() {
   /*Button lesen, wenn Higth dann wuerfeln*/
-  if (wuerfeln.buttonState() == 1 && state == 0) {
+  if (wuerfelnLED.buttonState() == 1 && state == 0) {
     state == 1;
     animation();
     randomNumber(4000);
   }
-  if (wuerfeln.buttonState() == 0) {
+  if (wuerfelnLED.buttonState() == 0) {
     state == 0;
     delay(100);
   }
@@ -66,22 +66,22 @@ void randomNumber(int time) {
     
     /*Je nach Zufallszahl, wird das entsprechende Wuerfelbild aufgerufen*/
     switch(randNumber) {
-      case 1: wuerfeln.one();
+      case 1: wuerfelnLED.one();
             break;
-      case 2: wuerfeln.two();
+      case 2: wuerfelnLED.two();
             break;
-      case 3: wuerfeln.three();
+      case 3: wuerfelnLED.three();
             break;
-      case 4: wuerfeln.four();
+      case 4: wuerfelnLED.four();
             break;
-      case 5: wuerfeln.five();
+      case 5: wuerfelnLED.five();
             break;
-      case 6: wuerfeln.six();
+      case 6: wuerfelnLED.six();
             break;
     }
     delay(time);
     //Schaltet alle LEDs wieder aus
-    wuerfeln.clearAll();
+    wuerfelnLED.clearAll();
     delay(100);
 }
 
