@@ -1,46 +1,39 @@
 /*
 Dieses Programm stellt einen Wuerfel dar. Durch betaetigen des Tasters wird gewuerfelt.
 Das Ergebnis wird mit Hilfe von 7 LEDs angezeigt, die in Wuerfeloptik angeordnet sind.
+Beim Einschalten wird eine kleine Wuerfelanimation abgespielt.
+Beim Wuerfeln wird ebenfalls eine Animation abgespielt.
 */
+
+/*Verwendete Bibliothek*/
+#include <Wuerfeln.h>
 
 
 /*
  * Variablendefinition
 */
-// Anschluss Button
-  int button = 2;
-  // Anschluss LEDs fuer Wuerfel
-  int bottonRigth = 6;
-  int middleRigth = 7;
-  int middle = 8;
-  int bottonLeft = 9;
-  int middleLeft = 10;
-  int upperRigth = 11;
-  int upperLeft = 12;
+
 // Status für Button 0 = gedrueckt, 1 = gedrueckt
 int state = 0;
 // Zufallszahl fuer Wuerfelergebnis
 long randNumber;
+// Zufallszahl fuer Animationslaenge
+long randCount;
 
+
+/*Objekt erzeugen*/
+Wuerfeln wuerfeln(2,6,7,8,9,10,11,12);
 
 /*
  * Initial setup
 */
 void setup() {
-  /*Die Pins an denen eine LED angeschlossen ist werden als Output definiert*/
-  pinMode(bottonLeft, OUTPUT);
-  pinMode(bottonRigth, OUTPUT);
-  pinMode(middleLeft, OUTPUT);
-  pinMode(middle, OUTPUT);
-  pinMode(middleRigth, OUTPUT);
-  pinMode(upperLeft, OUTPUT);
-  pinMode(upperRigth, OUTPUT);
-  //Der Pin an dem der Button angeschlossen ist, wird als Input definiert
-  pinMode(button, INPUT);
   //oeffnet serial port, setzt Datenrate auf 9600 bps
   Serial.begin(9600);
-  //Setzt den Ausgangspunkt fuer die random Funktion 
+  //Setzt den Ausgangspunkt fuer die random Funktion
   randomSeed(analogRead(0));
+  // startet die Animation
+  animation();
 }
 
 /*
@@ -48,11 +41,12 @@ void setup() {
 */
 void loop() {
   /*Button lesen, wenn Higth dann wuerfeln*/
-  if (buttonState() == 1 && state == 0) {
+  if (wuerfeln.buttonState() == 1 && state == 0) {
     state == 1;
+    animation();
     randomNumber(4000);
   }
-  if (buttonState() == 0) {
+  if (wuerfeln.buttonState() == 0) {
     state == 0;
     delay(100);
   }
@@ -72,104 +66,33 @@ void randomNumber(int time) {
     
     /*Je nach Zufallszahl, wird das entsprechende Wuerfelbild aufgerufen*/
     switch(randNumber) {
-      case 1: one();
+      case 1: wuerfeln.one();
             break;
-      case 2: two();
+      case 2: wuerfeln.two();
             break;
-      case 3: three();
+      case 3: wuerfeln.three();
             break;
-      case 4: four();
+      case 4: wuerfeln.four();
             break;
-      case 5: five();
+      case 5: wuerfeln.five();
             break;
-      case 6: six();
+      case 6: wuerfeln.six();
             break;
     }
     delay(time);
     //Schaltet alle LEDs wieder aus
-    clearAll();
+    wuerfeln.clearAll();
     delay(100);
 }
 
+
 /* 
- * Ueberprueft, ob der Button gedrueckt ist oder nicht
- * 
- * @return 1 wenn gedrueckt, 0 wenn nicht gedrueckt
+ * erzeugt eine Animation von zufaelligen Wuerfelergebnissen, die hintereinander angezeigt werden
 */
-int buttonState(){
-  if(digitalRead(button)) {
-    return 1;
-  } else {
-    return 0;
+void animation() {
+  randCount = random(10, 25);
+  for (randCount = randCount; randCount > 0; randCount--) {
+    randomNumber(100);
   }
-}
-
-/* 
- * Schaltet LEDs fuer Wuerfelergebis 6 ein
-*/
-void six() {
-  digitalWrite(bottonLeft, HIGH);
-  digitalWrite(middleLeft, HIGH);
-  digitalWrite(upperLeft, HIGH);
-  digitalWrite(bottonRigth, HIGH);
-  digitalWrite(middleRigth, HIGH);
-  digitalWrite(upperRigth, HIGH);
-}
-/*
- * Schaltet LEDs fuer Wuerfelergebis 5 ein
-*/
-void five() {
-  digitalWrite(bottonLeft, HIGH);
-  digitalWrite(upperLeft, HIGH);
-  digitalWrite(bottonRigth, HIGH);
-  digitalWrite(upperRigth, HIGH);
-  digitalWrite(middle, HIGH);
-}
-
-/*
- * Schaltet LEDs fuer Wuerfelergebis 4 ein
-*/
-void four() {
-  digitalWrite(bottonLeft, HIGH);
-  digitalWrite(upperLeft, HIGH);
-  digitalWrite(bottonRigth, HIGH);
-  digitalWrite(upperRigth, HIGH);
-}
-
-/*
- * Schaltet LEDs fuer Wuerfelergebis 3 ein
-*/
-void three() {
-  digitalWrite(bottonLeft, HIGH);
-  digitalWrite(middle, HIGH);
-  digitalWrite(upperRigth, HIGH);
-}
-
-/*
- * Schaltet LEDs fuer Wuerfelergebis 2 ein
-*/
-void two() {
-  digitalWrite(bottonLeft, HIGH);
-  digitalWrite(upperRigth, HIGH);
-}
-
-/*
- * Schaltet LED fuer Wuerfelergebis 1 ein
-*/
-void one() {
-  digitalWrite(middle, HIGH);
-}
-
-
-/*
- * Schaltet alle LEDs aus
-*/
-void clearAll() {
-  digitalWrite(bottonLeft, LOW);
-  digitalWrite(middleLeft, LOW);
-  digitalWrite(upperLeft, LOW);
-  digitalWrite(bottonRigth, LOW);
-  digitalWrite(middleRigth, LOW);
-  digitalWrite(upperRigth, LOW);
-  digitalWrite(middle, LOW);
+  
 }
