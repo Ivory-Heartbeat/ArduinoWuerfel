@@ -1,6 +1,6 @@
 /*
 Dieses Programm stellt einen Wuerfel dar. Durch betaetigen des Tasters wird gewuerfelt.
-Das Ergebnis wird mit Hilfe von 7 LEDs angezeigt, die in Wuerfeloptik angeordnet sind.
+Das Ergebnis wird mit Hilfe von 6 LEDs angezeigt, die in eine Reihe angeordnet sind. Jede LED steht fuer eine Zahl zwischen 1 und 6. (von links nach rechts aufsteigend)
 Beim Einschalten wird eine kleine Wuerfelanimation abgespielt.
 Beim Wuerfeln wird ebenfalls eine Animation abgespielt.
 */
